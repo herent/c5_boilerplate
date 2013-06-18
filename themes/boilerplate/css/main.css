@@ -13,7 +13,7 @@
 body {
      margin: 0;
      padding: 0;
-     background: #FFF;
+     background: #737554;
 }
 .page-body-wrap {
      font-size: 16px;
@@ -21,9 +21,11 @@ body {
      overflow: hidden;
      z-index: 1;
      position: relative;
-	width: 980px;
+	width: 940px;
 	max-width: 95%;
 	margin: 0 auto;
+	padding: 30px 20px;
+	background: #FFF;
 }
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
