@@ -40,9 +40,10 @@ class C5BoilerplatePackage extends Package {
 //		http://www.concrete5.org/documentation/developers/system/events
 //		
 		Events::extendPageType('boilerplate', 'on_page_add');
-//		$html = Loader::helper("html");
-//		View::addHeaderItem($html->css("boilerplate.css", "boilerplate"));
-//		View::addHeaderItem($html->javascript("boilerplate.js", "boilerplate"));
+		$html = Loader::helper("html");
+		$v = View::getInstance();
+		$v->addHeaderItem($html->css("boilerplate.css", "c5_boilerplate"));
+		$v->addHeaderItem($html->javascript("boilerplate.js", "c5_boilerplate"));
 	}
 
 	public function install($post = array()) {

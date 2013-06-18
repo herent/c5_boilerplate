@@ -28,7 +28,7 @@ class ContactFormExternalFormBlockController extends BlockController {
 		}
 
 		// the second paramater is to check if the MX record exists
-		if ($str->email($_POST['fb_email'], true)) {
+		if ($str->email($_POST['email'], true)) {
 			$email = $_POST['email'];
 		} else {
 			$e->add(t("Please include a valid email address."));
@@ -41,7 +41,6 @@ class ContactFormExternalFormBlockController extends BlockController {
 		}
 
 		if (!$e->has()) {
-			$this->set('response', t('Thanks!'));
 
 			$mh = Loader::helper('mail');
 			if (defined('EMAIL_DEFAULT_FROM_ADDRESS')) {
