@@ -45,5 +45,6 @@ if ($isEditMode) {
 		 */?>
      </head>
      <body class="<?php echo $c->getCollectionTypeHandle(); ?><?php echo $canWrite . $edit; ?>">
-          <div id="page-body-wrap">
-			<div id="header-phone">
+		<!-- Scope all of your css rules to .page-body-wrap if possible.
+			This will keep them from eating into the CMS -->
+          <div class="page-body-wrap">

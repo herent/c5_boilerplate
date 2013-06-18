@@ -1,2 +1,2 @@
-Empowered Benefits
-A custom responsive theme for Empowered Benefits created 11/2012.
+Boilerplate Theme
+A sample theme for the boilerplate package.

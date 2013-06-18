@@ -15,12 +15,15 @@ body {
      padding: 0;
      background: #FFF;
 }
-#page-body-wrap {
+.page-body-wrap {
      font-size: 16px;
      line-height: 24px;
      overflow: hidden;
      z-index: 1;
      position: relative;
+	width: 980px;
+	max-width: 95%;
+	margin: 0 auto;
 }
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
@@ -28,13 +31,13 @@ body {
  * Customize the background color to match your design.
  */
 
-#page-body-wrap ::-moz-selection {
+.page-body-wrap ::-moz-selection {
      background: #991d20;
      color: #000;
      text-shadow: none;
 }
 
-#page-body-wrap ::selection {
+.page-body-wrap ::selection {
      background: #991d20;
      color: #000;
      text-shadow: none;
@@ -44,7 +47,7 @@ body {
  * A better looking default horizontal rule
  */
 
-#page-body-wrap hr {
+.page-body-wrap hr {
      display: block;
      height: 1px;
      border: 0;
@@ -57,7 +60,7 @@ body {
  * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
  */
 
-#page-body-wrap img {
+.page-body-wrap img {
      vertical-align: middle;
      max-width: 100%;
 }
@@ -66,7 +69,7 @@ body {
  * Remove default fieldset styles.
  */
 
-#page-body-wrap fieldset {
+.page-body-wrap fieldset {
      border: 0;
      margin: 0;
      padding: 0;
@@ -76,7 +79,7 @@ body {
  * Allow only vertical resizing of textareas.
  */
 
-#page-body-wrap textarea {
+.page-body-wrap textarea {
      resize: vertical;
 }
 
@@ -84,7 +87,7 @@ body {
    Chrome Frame prompt
    ========================================================================== */
 
-#page-body-wrap .chromeframe {
+.page-body-wrap .chromeframe {
      margin: 0.2em 0;
      background: #ccc;
      color: #000;
@@ -131,7 +134,7 @@ body {
    Core Overrides / Misc Adjustments
    ========================================================================== */
 
-#page-body-wrap ul.inputs-list li {
+.page-body-wrap ul.inputs-list li {
      background: transparent !important;
      padding-left: 0 !important;
 }
@@ -143,7 +146,7 @@ body {
  * Image replacement
  */
 
-#page-body-wrap .ir {
+.page-body-wrap .ir {
      background-color: transparent;
      border: 0;
      overflow: hidden;
@@ -151,7 +154,7 @@ body {
      *text-indent: -9999px;
 }
 
-#page-body-wrap .ir:before {
+.page-body-wrap .ir:before {
      content: "";
      display: block;
      width: 0;
@@ -162,8 +165,8 @@ body {
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
 
-#page-body-wrap .hidden,
-#page-body-wrap #noShow{
+.page-body-wrap .hidden,
+.page-body-wrap #noShow{
      display: none !important;
      visibility: hidden;
 }
@@ -172,7 +175,7 @@ body {
  * Hide only visually, but have it available for screenreaders: h5bp.com/v
  */
 
-#page-body-wrap .visuallyhidden {
+.page-body-wrap .visuallyhidden {
      border: 0;
      clip: rect(0 0 0 0);
      height: 1px;
@@ -188,8 +191,8 @@ body {
  * when navigated to via the keyboard: h5bp.com/p
  */
 
-#page-body-wrap .visuallyhidden.focusable:active,
-#page-body-wrap .visuallyhidden.focusable:focus {
+.page-body-wrap .visuallyhidden.focusable:active,
+.page-body-wrap .visuallyhidden.focusable:focus {
      clip: auto;
      height: auto;
      margin: 0;
@@ -202,7 +205,7 @@ body {
  * Hide visually and from screenreaders, but maintain layout
  */
 
-#page-body-wrap .invisible {
+.page-body-wrap .invisible {
      visibility: hidden;
 }
 
@@ -218,15 +221,15 @@ body {
  *    `:before` to contain the top-margins of child elements.
  */
 
-#page-body-wrap .clearfix:before,
-#page-body-wrap .clearfix:after,
+.page-body-wrap .clearfix:before,
+.page-body-wrap .clearfix:after,
 #vegas-slider-text-block-wrapper .clearfix:before,
 #vegas-slider-text-block-wrapper .clearfix:after{
      content: " "; /* 1 */
      display: table; /* 2 */
 }
 
-#page-body-wrap .clearfix:after,
+.page-body-wrap .clearfix:after,
 #vegas-slider-text-block-wrapper .clearfix:after{
      clear: both;
 }
@@ -236,7 +239,7 @@ body {
  * Include this rule to trigger hasLayout and contain floats.
  */
 
-#page-body-wrap .clearfix,
+.page-body-wrap .clearfix,
 #vegas-slider-text-block-wrapper .clearfix{
      *zoom: 1;
 }

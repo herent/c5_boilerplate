@@ -7,8 +7,13 @@
                </h1>
                <nav id="footer-main-nav">
                     <?php
-//                    $globalNav = Stack::getByName('Embedded Footer Nav');
-//                    $globalNav->display();
+                    $a7 = new GlobalArea("Footer Nav");
+				$u = new User();
+				if (!$u->isSuperUser()){
+					$a->disableControls();
+				}
+                    $a7->setBlockLimit(1);
+                    $a7->display();
                     ?>
                     <div class="clearfix"></div>
                </nav>
@@ -16,8 +21,12 @@
 		<div id="footer-column-1" class="footer-column">
 			<?php
                     $a7 = new GlobalArea("Footer Message");
+				$u = new User();
+				if (!$u->isSuperUser()){
+					$a->disableControls();
+				}
                     $a7->setBlockLimit(1);
-                    $a7->display($c);
+                    $a7->display();
                     ?>
 			</div>
           <div class="clearfix"></div>
