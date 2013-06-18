@@ -1,33 +1,43 @@
-<?php defined('C5_EXECUTE') or die("Access Denied.");
+<?php
+
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class ContactFormExternalFormBlockController extends BlockController {
+	/*
+	 * Note the name of the function - action_do_contact
+	 * In the view, it's $this->action('do_contact')
+	 */
 
 	public function action_do_contact() {
 
 		$e = Loader::helper('validation/error');
+		// this 
+		$str = Loader::helper('validation/strings');
 
-		if (strlen($_POST['fullname']) > 0) {
+
+		if ($str->notempty($_POST['fullname']) > 0) {
 			$fullname = $_POST['fullname'];
 		} else {
-			$e->add("Please include your name.");
+			$e->add(t("Please include your name."));
 		}
 
-		if (strlen($_POST['phone']) > 0) {
+		if ($str->notempty($_POST['phone']) > 0) {
 			$phone = $_POST['phone'];
 		} else {
-			$e->add("Please include your phone number.");
+			$e->add(t("Please include your phone number."));
 		}
 
-		if (eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['email'])) {
-		  $email = $_POST['email'];
+		// the second paramater is to check if the MX record exists
+		if ($str->email($_POST['fb_email'], true)) {
+			$email = $_POST['email'];
 		} else {
-		  $e->add("Please include a valid email address.");
+			$e->add(t("Please include a valid email address."));
 		}
 
-		if (strlen($_POST['comment']) > 0) {
+		if ($str->notempty($_POST['comment']) > 0) {
 			$comment = $_POST['comment'];
 		} else {
-			$e->add("Please include a comment.");
+			$e->add(t("Please include a comment."));
 		}
 
 		if (!$e->has()) {
@@ -43,13 +53,26 @@ class ContactFormExternalFormBlockController extends BlockController {
 				}
 			}
 			$mh->addParameter('fullname', $fullname);
-			$mh->addParameter('phone'   , $phone);
-			$mh->addParameter('email'   , $email);
-			$mh->addParameter('comment' , $comment);
-			$mh->addParameter('signUp'  , $signUp);
-			$mh->to("developers@hutman.net");
-			$mh->load('contact_form_submission');
+			$mh->addParameter('phone', $phone);
+			$mh->addParameter('email', $email);
+			$mh->addParameter('comment', $comment);
+			// this is not neccessary, but helps make things easier for 
+			// the site owner
+			$mh->replyto($email, $fullname);
+			$mh->to("email@somesite.com");
+			// leave out the second argument if you are loading from the
+			// core or the outer directory
+			$mh->load('contact_form_submission', 'c5_boilerplate');
 			$mh->sendMail();
+
+			// another way to do this is with bodyHTML
+			// note that the other parameters for to, from, etc
+			// are preserved.
+
+			$emailText = "<h1>" . t("Thanks!") . "</h1>";
+			$mh->setBodyHTML($emailText);
+			$mh->sendMail();
+
 			// redirect to another page
 			// header('Location: ' . View::url('/contact-us/thank-you'));
 			// or set message for the view
@@ -57,7 +80,6 @@ class ContactFormExternalFormBlockController extends BlockController {
 		} else {
 			$this->set('error', $e);
 		}
-
-		
 	}
+
 }
