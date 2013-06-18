@@ -36,7 +36,12 @@ Subjects Covered
 ### Dashboard Ajax 
 
 The single page at /dashboard/boilerplate/output_stuff is set up with a basic example
-of how to use the page controller, a tools file, and an element to update the content
+of how to use the page controller, a tools file, and an element to update the content.
+It's kept as basic as possible to keep it easy to understand. Just a single button
+that sends a get request with no parameters to the tools file, which then calls a 
+method on the page controller to get a new array, which is then passed in to a
+package element to format the data. Then part of the page is updated with that new 
+HTML.
 
 For a more a detailed example of this, which uses the built in list models to allow
 for sorting and paginating a database driven table, please check out my 
@@ -64,7 +69,18 @@ It shows:
 ### Custom Block
 
 Has a custom "Callout" block that has controller side validation, rich text
-processing to keep links correct, etc
+processing to keep links correct, etc.
+
+1. Image Picker
+1. Text Field
+1. WYSIWYG
+1. Link Picker
+	* Choose if a link is shown or not for use in the template without requiring it to be in the text content
+	* External link or a page picker for an internal link
+	* Specify text for the link, though the template may not use it.
+
+It uses the validate() function on the page controller to provide more control of
+the verification and error message display.
 
 ### Block Templates
 
@@ -78,7 +94,7 @@ with templates they find useful for different blocks, they would be welcomed
 ### Database Formatting Options
 
 The db.xml file shows sample options for most of the fields you can create using
-the [http://phplens.com/lens/adodb/docs-datadict.htm] adodb XML format
+the [http://phplens.com/lens/adodb/docs-datadict.htm](ADODB XML) format
 
 ### Page Type Events
 
