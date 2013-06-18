@@ -1,0 +1,314 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+body {
+     margin: 0;
+     padding: 0;
+     background: #FFF;
+}
+#page-body-wrap {
+     font-size: 16px;
+     line-height: 24px;
+     overflow: hidden;
+     z-index: 1;
+     position: relative;
+}
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection declarations have to be separate.
+ * Customize the background color to match your design.
+ */
+
+#page-body-wrap ::-moz-selection {
+     background: #991d20;
+     color: #000;
+     text-shadow: none;
+}
+
+#page-body-wrap ::selection {
+     background: #991d20;
+     color: #000;
+     text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+#page-body-wrap hr {
+     display: block;
+     height: 1px;
+     border: 0;
+     border-top: 1px solid #ccc;
+     margin: 1em 0;
+     padding: 0;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+
+#page-body-wrap img {
+     vertical-align: middle;
+     max-width: 100%;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+#page-body-wrap fieldset {
+     border: 0;
+     margin: 0;
+     padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+#page-body-wrap textarea {
+     resize: vertical;
+}
+
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
+
+#page-body-wrap .chromeframe {
+     margin: 0.2em 0;
+     background: #ccc;
+     color: #000;
+     padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Media Query Adjustments
+   ========================================================================== */
+/* 1024px */
+@media only screen and (max-width: 64em) {
+}
+/* 800px */
+@media only screen and (max-width: 50em) {
+     
+}
+/* 768 px */
+@media only screen and (max-width: 48em) {
+     
+}
+/* 600px */
+@media only screen and (max-width: 63.5em) {
+}
+/* 480px */
+@media only screen and (max-width: 30em) {
+}
+/* 320px */
+@media only screen and (max-width: 20em) {
+}
+
+/* ==========================================================================
+   Site Search Results
+   ========================================================================== */
+
+.search-result {
+     margin-bottom: 15px;
+}
+
+/* ==========================================================================
+   Core Overrides / Misc Adjustments
+   ========================================================================== */
+
+#page-body-wrap ul.inputs-list li {
+     background: transparent !important;
+     padding-left: 0 !important;
+}
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+#page-body-wrap .ir {
+     background-color: transparent;
+     border: 0;
+     overflow: hidden;
+     /* IE 6/7 fallback */
+     *text-indent: -9999px;
+}
+
+#page-body-wrap .ir:before {
+     content: "";
+     display: block;
+     width: 0;
+     height: 100%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+#page-body-wrap .hidden,
+#page-body-wrap #noShow{
+     display: none !important;
+     visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+#page-body-wrap .visuallyhidden {
+     border: 0;
+     clip: rect(0 0 0 0);
+     height: 1px;
+     margin: -1px;
+     overflow: hidden;
+     padding: 0;
+     position: absolute;
+     width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+#page-body-wrap .visuallyhidden.focusable:active,
+#page-body-wrap .visuallyhidden.focusable:focus {
+     clip: auto;
+     height: auto;
+     margin: 0;
+     overflow: visible;
+     position: static;
+     width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+#page-body-wrap .invisible {
+     visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+#page-body-wrap .clearfix:before,
+#page-body-wrap .clearfix:after,
+#vegas-slider-text-block-wrapper .clearfix:before,
+#vegas-slider-text-block-wrapper .clearfix:after{
+     content: " "; /* 1 */
+     display: table; /* 2 */
+}
+
+#page-body-wrap .clearfix:after,
+#vegas-slider-text-block-wrapper .clearfix:after{
+     clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+#page-body-wrap .clearfix,
+#vegas-slider-text-block-wrapper .clearfix{
+     *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+     * {
+          background: transparent !important;
+          color: #000 !important; /* Black prints faster: h5bp.com/s */
+          box-shadow: none !important;
+          text-shadow: none !important;
+     }
+
+     a,
+     a:visited {
+          text-decoration: underline;
+     }
+
+     a[href]:after {
+          content: " (" attr(href) ")";
+     }
+
+     abbr[title]:after {
+          content: " (" attr(title) ")";
+     }
+
+     /*
+      * Don't show links for images, or javascript/internal links
+      */
+
+     .ir a:after,
+     a[href^="javascript:"]:after,
+     a[href^="#"]:after {
+          content: "";
+     }
+
+     pre,
+     blockquote {
+          border: 1px solid #999;
+          page-break-inside: avoid;
+     }
+
+     thead {
+          display: table-header-group; /* h5bp.com/t */
+     }
+
+     tr,
+     img {
+          page-break-inside: avoid;
+     }
+
+     img {
+          max-width: 100% !important;
+     }
+
+     @page {
+          margin: 0.5cm;
+     }
+
+     p,
+     h2,
+     h3 {
+          orphans: 3;
+          widows: 3;
+     }
+
+     h2,
+     h3 {
+          page-break-after: avoid;
+     }
+}

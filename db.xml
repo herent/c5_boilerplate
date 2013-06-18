@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="bp_sample">
+		<field name="id" type="I">
+			<key />
+			<autoincrement />
+		</field>
+		<field name="cParentID" type="I">
+			<default value="0" />
+			<NOTNULL/>
+		</field>
+		<field name="cID" type="I">
+			<default value="0" />
+			<NOTNULL/>
+		</field>
+		<field name="date_col" type="T">
+			<NOTNULL/>
+			<DEFAULT value="0000-00-00 00:00:00"/>
+		</field>
+		<field name="text_col" type="C" size="255"></field>
+		<field name="image_col" type="I"></field>
+                
+		<field name="long_text" type="B"></field>
+		<field name="boolean_col" type="L">
+			<default value="0" />
+		</field>
+		<field name="timestamp_col" type="TS"></field>
+	</table>
+</schema>

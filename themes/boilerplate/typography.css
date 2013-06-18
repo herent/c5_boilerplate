@@ -1,0 +1,257 @@
+html {
+     font-size: 100.01%;
+}
+body {
+     font-family: Arial, Helvetica, sans-serif;
+     font-weight: normal;
+     line-height: 1.5;
+     color: #666;
+}
+#tinymce {
+     font-size: 16px;
+}
+/* Headings
+-------------------------------------------------------------- */
+
+#tinymce h1,
+#tinymce h2,
+#tinymce h3,
+#tinymce h4,
+#tinymce h5,
+#tinymce h6,
+#page-body-wrap h1,
+#page-body-wrap h2,
+#page-body-wrap h3,
+#page-body-wrap h4,
+#page-body-wrap h5,
+#page-body-wrap h6{ font-weight: normal; color: #000; margin: 0; padding: 0}
+
+#tinymce h1,
+#page-body-wrap h1 { font-size: 3.75em; line-height: 1.1em; margin-bottom: 0.5em; }
+
+#tinymce h2,
+#page-body-wrap h2 { font-size: 1.875em; line-height: 1.15em; margin: 0.25em 0 0.75em 0; }
+
+#tinymce h3,
+#page-body-wrap h3 { font-size: 1em; line-height: 1.5em; margin: 0.1 0 .25em 0; font-weight: 600;}
+
+#tinymce h4,
+#page-body-wrap h4 { font-size: 1em; line-height: 1.05; margin: 0.1 0 .25em 0; }
+
+#tinymce h5,
+#page-body-wrap h5 { font-size: 1em; margin-bottom: .25em; }
+
+#tinymce h6,
+#page-body-wrap h6 { font-size: .875em; }
+
+#tinymce h1 img, 
+#tinymce h2 img, 
+#tinymce h3 img,
+#tinymce h4 img, 
+#tinymce h5 img, 
+#tinymce h6 img,
+#page-body-wrap  h1 img, 
+#page-body-wrap  h2 img, 
+#page-body-wrap  h3 img,
+#page-body-wrap  h4 img, 
+#page-body-wrap  h5 img, 
+#page-body-wrap  h6 img {
+     margin: 0;
+	outline: none !important;
+}
+
+
+/* Text elements
+-------------------------------------------------------------- */
+
+#tinymce p,
+#page-body-wrap  p { 
+	line-height: 1.5em;
+     margin: 0 0 1.5em; 
+     color: #666;
+}
+/* 
+     These can be used to pull an image at the start of a paragraph, so 
+     that the text flows around it (usage: <p><img class="left">Text</p>) 
+*/
+.left,
+#tinymce .left,
+#page-body-wrap  .left  			{ float: left !important; }
+
+#tinymce p .left,
+#page-body-wrap  p .left			{ margin: 1.5em 1.5em 1.5em 0; padding: 0; }
+
+.right,
+#tinymce .right,
+#page-body-wrap  .right 			{ float: right !important; }
+
+#tinymce p .right,
+#page-body-wrap  p .right 		{ margin: 1.5em 0 1.5em 1.5em; padding: 0; }
+
+#tinymce a:focus,
+#tinymce a:hover,
+#page-body-wrap  a:focus,
+#page-body-wrap  a:hover { 
+     text-decoration: underline; 
+}
+
+#tinymce a,
+#tinymce a:visited,
+#page-body-wrap  a,
+#page-body-wrap  a:visited { 
+     color: #991d20; 
+     text-decoration: none; 
+}
+
+#tinymce blockquote,
+#page-body-wrap  blockquote  { 
+     margin: 1.5em; 
+     color: #999; 
+     font-style: italic; 
+}
+
+#tinymce strong,
+#tinymce dfn,
+#page-body-wrap  strong,
+#page-body-wrap  dfn	{ font-weight: 600; }
+
+#tinymce em,
+#tinymce dfn,
+#page-body-wrap  em,
+#page-body-wrap  dfn      { font-style: italic; }
+
+#tinymce sup, 
+#tinymce sub,
+#page-body-wrap  sup, 
+#page-body-wrap  sub    { line-height: 0; }
+
+
+#tinymce abbr,
+#tinymce acronym,
+#page-body-wrap  abbr,
+#page-body-wrap  acronym     { border-bottom: 1px dotted #666; }
+
+#tinymce address,
+#page-body-wrap  address     { margin: 0 0 1.5em; font-style: italic; }
+
+#tinymce pre,
+#page-body-wrap  pre         { margin: 1.5em 0; white-space: pre; }
+
+#tinymce pre,
+#tinymce code,
+#tinymce tt,
+#page-body-wrap  pre,
+#page-body-wrap  code,
+#page-body-wrap  tt { font: 1em 'andale mono', 'lucida console', monospace; line-height: 1.5; }
+
+
+/* Lists
+-------------------------------------------------------------- */
+
+#tinymce li ul,
+#tinymce li ol,
+#page-body-wrap li ul,
+#page-body-wrap li ol{ margin: 0; }
+
+#tinymce ul, 
+#tinymce ol,
+#page-body-wrap ul, 
+#page-body-wrap ol      { 
+	margin: 0 1.5em 1.5em 0; padding: 0; 
+	color: #666;
+}
+
+#tinymce ul,
+#page-body-wrap ul { 
+	list-style-type: none; 
+}
+#tinymce ul li,
+#page-body-wrap ul li { 
+	margin: 0;
+	padding: 0 0 0 7px;
+	background: transparent url('./images/list_bullet.gif') 0 .75em no-repeat;
+}
+#tinymce ol,
+#page-body-wrap ol          { list-style-type: decimal; }
+
+#tinymce ol li,
+#page-body-wrap ol li         { 
+	list-style-position: outside; 
+	margin-left: 22px;
+	list-style-type: decimal;
+}
+
+#tinymce dl,
+#page-body-wrap dl { margin: 0 0 1.5em 0; }
+
+#tinymce dl dt,
+#page-body-wrap dl dt       { font-weight: bold; }
+
+#tinymce dd,
+#page-body-wrap dd          { margin-left: 1.5em;}
+
+
+/* Tables
+-------------------------------------------------------------- */
+
+/* 
+     Because of the need for padding on TH and TD, the vertical rhythm 
+     on table cells has to be 27px, instead of the standard 18px or 36px 
+     of other elements. 
+*/ 
+#tinymce table,
+#page-body-wrap table { margin-bottom: 1.4em; width:100%; border: 1px solid #ccc; }
+
+#tinymce th,
+#page-body-wrap th          { font-weight: bold; background: #ebebeb; text-align: left;}
+
+#tinymce thead th,
+#page-body-wrap thead th    {  }
+
+#tinymce th,
+#tinymce td,
+#tinymce caption,
+#page-body-wrap th,
+#page-body-wrap td,
+#page-body-wrap caption{ padding: 4px 10px 4px 5px; border: 1px solid #ccc; }
+/*
+     You can zebra-stripe your tables in outdated browsers by adding 
+     the class "even" to every other table row. 
+*/
+#tinymce tbody tr:nth-child(odd) td, 
+#tinymce tbody tr.odd td,
+#page-body-wrap tbody tr:nth-child(odd) td, 
+#page-body-wrap tbody tr.odd td { 
+     background: #ebebeb; 
+}
+
+#tinymce tfoot,
+#page-body-wrap tfoot { font-style: italic; }
+
+#tinymce caption,
+#page-body-wrap caption{ background: #eee; }
+
+/* merged in from grid.css, these are more typography type styles */
+
+/* Use this to create a horizontal ruler across a column. */
+#page-body-wrap hr,
+#tinymce hr{
+     background: #ccc;
+     color: #ccc;
+     clear: both;
+     float: none;
+     width: 100%;
+     height: 1px;
+     margin: 0 0 1.5em;
+     border: none;
+}
+
+#page-body-wrap img,
+#tinymce img,
+.scale-with-grid
+{
+     vertical-align: middle;
+     max-width: 100%;
+	height: auto !important;
+     outline: none !important;
+}
