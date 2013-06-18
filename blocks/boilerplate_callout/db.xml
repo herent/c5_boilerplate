@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+     <table name="btBoilerplateCallout">
+          <field name="bID" type="I">
+               <key />
+               <unsigned />
+          </field>
+
+          <field name="fID" type="I"></field>
+
+          <field name="title" type="X"></field>
+
+          <field name="content" type="X2"></field>
+          
+          <field name="includeLink" type="L">
+               <default value="0" />
+          </field>
+          <field name="linkType" type="C" size="255">
+          </field>
+          <field name="linkText" type="C" size="255">
+          </field>
+          <field name="linkURL" type="X2">
+          </field>
+          <field name="linkCID" type="I">
+               <unsigned />
+               <notnull />
+               <default value="0" />
+          </field>
+
+     </table>
+</schema>

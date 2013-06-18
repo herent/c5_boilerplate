@@ -57,6 +57,7 @@ class C5BoilerplatePackage extends Package {
 //		
 
 		$pkg = parent::install();
+		$this->installBlocks($pkg);
 		$this->installSinglePages($pkg);
 		$this->installPageAttributes($pkg);
 		$this->installPageTypes($pkg);
@@ -105,6 +106,20 @@ class C5BoilerplatePackage extends Package {
 //			exit;
 //		}
 	}
+	
+	private function installBlocks($pkg) {
+          $bt = BlockType::getByHandle('boilerplate_callout');
+          if (!$bt || !is_object($bt)){
+               BlockType::installBlockTypeFromPackage('boilerplate_callout', $pkg);
+          } else {
+			// the block already exists, so we want
+			// to update it to use the block from our package
+			// this might not be OK for marketplace stuff if
+			// you are modifying other packages or the core
+			Loader::db()->execute('update Pages set pkgID = ? where btID = ?', array($pkg->pkgID, $bt->getBlockTypeID()));
+			
+		}
+	}
 
 	private function installGroups() {
 		/*
@@ -136,9 +151,7 @@ class C5BoilerplatePackage extends Package {
 		    'view_page_versions',
 		    'edit_page_properties',
 		    'edit_page_contents',
-		    'approve_page_versions',
-		    'move_or_copy_page',
-		    'edit_page_type'
+		    'approve_page_versions'
 		);
 		$adminPage = array(
 		    'edit_page_speed_settings',
@@ -148,7 +161,9 @@ class C5BoilerplatePackage extends Package {
 		    'edit_page_type',
 		    'delete_page',
 		    'preview_page_as_user',
-		    'delete_page_versions'
+		    'delete_page_versions',
+		    'move_or_copy_page',
+		    'edit_page_type'
 		);
 
 		// Now to get the the group that we made for boilerplate
