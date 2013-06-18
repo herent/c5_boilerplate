@@ -2,7 +2,8 @@
 
 defined("C5_EXECUTE") or die(_("Access Denied."));
 
-if (is_array($stuff)){?>
+if (is_array($args['stuff'])){
+	$stuff = $args['stuff'];?>
 <h3><?= t("This is the stuff:");?></h3>
 <ul>
 	<li><?= $stuff['itemOne'];?></li>

@@ -2,7 +2,7 @@
 
 defined("C5_EXECUTE") or die(_("Access Denied."));
 
-class DashboardBoilerplateBoilerplateSubController extends Controller {
+class DashboardBoilerplateOutputStuffController extends Controller {
 	
 	public function view() {
 		$stuff = $this->getMyStuff(t("Item One"), t("Item Two"));

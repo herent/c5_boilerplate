@@ -13,7 +13,7 @@ class C5BoilerplatePackage extends Package {
 	// note that many of the functions in this template might need Loader::('whatever') 
 	// calls for older versions. 5.6 has an autoloader that makes sure most of these
 	// classes are intiated on all requests. see /concrete/startup/autoload.php
-
+	
 	protected $appVersionRequired = '5.6.1.2';
 	// by incrementing this when you add new functionality, deployment becomes
 	// much much easier
@@ -40,9 +40,9 @@ class C5BoilerplatePackage extends Package {
 //		http://www.concrete5.org/documentation/developers/system/events
 //		
 		Events::extendPageType('boilerplate', 'on_page_add');
-		$html = Loader::helper("html");
-		View::addHeaderItem($html->css("boilerplate.css", "boilerplate"));
-		View::addHeaderItem($html->javascript("boilerplate.js", "boilerplate"));
+//		$html = Loader::helper("html");
+//		View::addHeaderItem($html->css("boilerplate.css", "boilerplate"));
+//		View::addHeaderItem($html->javascript("boilerplate.js", "boilerplate"));
 	}
 
 	public function install($post = array()) {
@@ -100,7 +100,7 @@ class C5BoilerplatePackage extends Package {
 //		if ($havePkg) {
 //			parent::upgradeCoreData();
 //		} else {
-//			$message = t("Requirements not met, you must have the Needed Package installed.");
+//			$message = t("Requirements not met, you must have the 'Needed Package' installed.");
 //			throw new Exception($message);
 //			exit;
 //		}
@@ -123,11 +123,15 @@ class C5BoilerplatePackage extends Package {
 		 * that revision. Eventually, this package will have other branches for 
 		 * earlier versions.
 		 * 
+		 * Not everything shown here will work with simple permissions. People 
+		 * will just be set as able to view or admin, the nuanced stuff about 
+		 * sub page permissions, etc will not be applied
+		 * 
 		 * First off, we need to set up arrays of what people are allowed to do.
 		 */
 
 		$viewOnly = array('view_page');
-		$adminPage = array(
+		$writePage = array(
 		    'view_page',
 		    'view_page_versions',
 		    'edit_page_properties',
@@ -136,6 +140,15 @@ class C5BoilerplatePackage extends Package {
 		    'move_or_copy_page',
 		    'preview_page_as_user',
 		    'edit_page_type'
+		);
+		$adminPage = array(
+		    'edit_page_speed_settings',
+		    'edit_page_permissions',
+		    'edit_page_theme',
+		    'schedule_page_contents_guest_access',
+		    'edit_page_type',
+		    'delete_page',
+		    'delete_page_versions'
 		);
 
 		// Now to get the the group that we made for boilerplate
@@ -152,15 +165,67 @@ class C5BoilerplatePackage extends Package {
 			$bpPage->assignPermissions(Group::getByID(GUEST_GROUP_ID), $viewOnly, -1);
 			$bpPage->assignPermissions(Group::getByID(REGISTERED_GROUP_ID), $viewOnly);
 			$bpPage->assignPermissions(Group::getByID(ADMIN_GROUP_ID), $adminPage);
-			$bpPage->assignPermissions($bpGroup, $adminPage);
-			$bpPage->assignPermissions($ui, $adminPage);
+			$bpPage->assignPermissions(Group::getByID(ADMIN_GROUP_ID), $writePage);
+			$bpPage->assignPermissions($bpGroup, $writePage);
+			$bpPage->assignPermissions($ui, $writePage);
 			// at this point, our page will let people edit, and others can't even view
 			// in order to allow sub-pages to be added by our admins, we'll need to get
-			// a _bit_ more complicated
+			// a _bit_ more complicated.
+			// this could probbly be cleaned up a little, to be more efficient
 			
 			// first get the ctID of the page type we want them to be able to add
 			$bpID = CollectionType::getByHandle('boilerplate')->getCollectionTypeID();
-			// In order to 
+			// In order to allow the user to add sub pages, we need to do this
+			$bpAdminUserPE = UserPermissionAccessEntity::getOrCreate($ui);
+			$entities[] = $bpAdminUserPE;
+			// lets them add external links
+			$args = array();
+			$args['allowExternalLinksIncluded'][$bpAdminUserPE->getAccessEntityID()] = 1;
+			// I can't remember why it's "C" or what the other options are...
+			$args['pageTypesIncluded'][$bpAdminUserPE->getAccessEntityID()] = 'C';
+			// you can repeat this with as many different collection type IDs as you like
+			$args['ctIDInclude'][$bpAdminUserPE->getAccessEntityID()][] = $bpID;
+			
+			// now to allow it for groups
+			$bpAdminPE = GroupPermissionAccessEntity::getOrCreate($bpGroup);
+			$entities[] = $bpAdminPE;
+			$args['allowExternalLinksIncluded'][$bpAdminPE->getAccessEntityID()] = 1;
+			$args['pageTypesIncluded'][$bpAdminPE->getAccessEntityID()] = 'C';
+			$args['ctIDInclude'][$bpAdminPE->getAccessEntityID()][] = $bpID;
+			
+			// ordinary admins
+			$adminPE = GroupPermissionAccessEntity::getOrCreate(Group::getByID(ADMIN_GROUP_ID));
+			$entities[] = $adminPE;
+			$args['allowExternalLinksIncluded'][$adminPE->getAccessEntityID()] = 1;
+			$args['pageTypesIncluded'][$adminPE->getAccessEntityID()] = 'C';
+			$args['ctIDInclude'][$adminPE->getAccessEntityID()][] = $bpID;
+			
+			// and now some crazy voodoo
+			$pk = PagePermissionKey::getByHandle('add_subpage');
+			$pk->setPermissionObject($bpPage);
+
+			$pt = $pk->getPermissionAssignmentObject();
+			$pa = $pk->getPermissionAccessObject();
+			if (!is_object($pa)) {
+				$pa = PermissionAccess::create($pk);
+			}
+			foreach ($entities as $pe) {
+				$pa->addListItem($pe, false, PagePermissionKey::ACCESS_TYPE_INCLUDE);
+			}
+			$pa->save($args);
+			$pt->assignPermissionAccess($pa);
+
+			// and now we set it so that sub-pages added under this page
+			// inherit the same permissions
+			$pkr = new ChangeSubpageDefaultsInheritancePageWorkflowRequest();
+			$pkr->setRequestedPage($bpPage);
+			// if you pass in 0, they will inherit from page type default 
+			// permissions in the dashboard. That's what they would do anyway,
+			// if you don't do any of this stuff.
+			$pkr->setPagePermissionsInheritance(1);
+			$pkr->setRequesterUserID($u->getUserID());
+			$pkr->trigger();
+			
 		}
 	}
 
@@ -214,7 +279,7 @@ class C5BoilerplatePackage extends Package {
 		$bpMC = $boilerplate->getMasterTemplate();
 		$bt = BlockType::getByHandle('content');
 		$data = array('content' => t("Sample Boilerplate Content"));
-		$bpMC->addBlock($bt, 'Boilerpate Content', $data);
+		$bpMC->addBlock($bt, 'Boilerplate Content', $data);
 
 		/*
 		 * If you want to assign all the blocks from another page type to your
@@ -276,8 +341,8 @@ class C5BoilerplatePackage extends Package {
 		 * things that you can do here, these two are just to show how and where
 		 * to do it.
 		 */
-		$boilerplateSample->setAttribute('exclude_page_list', 0);
-		$boilerplateSample->setAttribute('exclude_nav', 0);
+		$boilerplateSample->setAttribute('exclude_page_list', 1);
+		$boilerplateSample->setAttribute('meta_description', t("A sample page created by the C5 Boilerplate package."));
 	}
 
 	private function installSinglePages($pkg) {
@@ -293,7 +358,7 @@ class C5BoilerplatePackage extends Package {
 			Loader::db()->execute('update Pages set pkgID = ? where cID = ?', array($pkg->pkgID, $cID));
 		} else {
 			// it doesn't exist, so now we add it
-			$p = SinglePage::add($path);
+			$p = SinglePage::add($path, $pkg);
 			if (is_object($p) && $p->isError() !== false) {
 				$p->update(array('cName' => t('Boilerplate')));
 			}
@@ -304,7 +369,7 @@ class C5BoilerplatePackage extends Package {
 		if (intval($cID) > 0 && $cID !== 1) {
 			Loader::db()->execute('update Pages set pkgID = ? where cID = ?', array($pkg->pkgID, $cID));
 		} else {
-			$p = SinglePage::add($path);
+			$p = SinglePage::add($path, $pkg);
 			if (is_object($p) && $p->isError() !== false) {
 				$p->update(array('cName' => t('Output Stuff')));
 			}

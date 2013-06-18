@@ -4,17 +4,24 @@ $ih = Loader::helper('concrete/interface');
 $dbh = Loader::helper('concrete/dashboard');
 $url = Loader::helper('concrete/urls');
 
-echo $dbh->getDashboardPaneHeaderWrapper(t('Boilerplate Sub'), false, false, false);
+echo $dbh->getDashboardPaneHeaderWrapper(t('Output Stuff'), false, false, false);
 ?>
 <div class='ccm-pane-body'>
+	<h1><?= t("About This Page");?></h1>
+	<p>
+		<?= t("This page has been created to show how the general workflow of 
+			using page controllers, views, tools files, and elements together 
+			is done in concrete5. Please check the source code to understand 
+			what is happening.");?>
+	</p>
 	<div id="boilerplate-results-wrap">
-	<?php Loader::element('boilerplate/output_stuff', 'c5_boilerplate'); ?>
+	<?php Loader::element('boilerplate/output_stuff', array('stuff' => $stuff), 'c5_boilerplate'); ?>
 	</div>
 </div>
 <div class="ccm-pane-footer">
 	<?php
 	print $ih->button_js( 
-		   t('Reload Stuff') . "&nbsp;<i class='icon-plus icon-white'></i>", 
+		   t('Load New Stuff'), 
 		   'reloadStuff()', 
 		   'right', 
 		   'btn-success');
