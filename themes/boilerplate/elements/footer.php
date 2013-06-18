@@ -10,7 +10,7 @@
                     $a7 = new GlobalArea("Footer Nav");
 				$u = new User();
 				if (!$u->isSuperUser()){
-					$a->disableControls();
+					$a7->disableControls();
 				}
                     $a7->setBlockLimit(1);
                     $a7->display();
@@ -23,7 +23,7 @@
                     $a7 = new GlobalArea("Footer Message");
 				$u = new User();
 				if (!$u->isSuperUser()){
-					$a->disableControls();
+					$a7->disableControls();
 				}
                     $a7->setBlockLimit(1);
                     $a7->display();

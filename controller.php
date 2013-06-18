@@ -13,7 +13,7 @@ class C5BoilerplatePackage extends Package {
 	// note that many of the functions in this template might need Loader::('whatever') 
 	// calls for older versions. 5.6 has an autoloader that makes sure most of these
 	// classes are intiated on all requests. see /concrete/startup/autoload.php
-	
+
 	protected $appVersionRequired = '5.6.1.2';
 	// by incrementing this when you add new functionality, deployment becomes
 	// much much easier
@@ -138,7 +138,6 @@ class C5BoilerplatePackage extends Package {
 		    'edit_page_contents',
 		    'approve_page_versions',
 		    'move_or_copy_page',
-		    'preview_page_as_user',
 		    'edit_page_type'
 		);
 		$adminPage = array(
@@ -148,6 +147,7 @@ class C5BoilerplatePackage extends Package {
 		    'schedule_page_contents_guest_access',
 		    'edit_page_type',
 		    'delete_page',
+		    'preview_page_as_user',
 		    'delete_page_versions'
 		);
 
@@ -158,12 +158,18 @@ class C5BoilerplatePackage extends Package {
 		$ui = UserInfo::getByID($u->getUserID());
 		// and our sample page
 		$bpPage = Page::getByPath('/boilerplate-sample');
-		
+
 		if (is_object($bpPage) && is_a($bpPage, "Page")) {
 			// by passing in -1, we are saying that all permissions in the array are
 			// not allowed
-			$bpPage->assignPermissions(Group::getByID(GUEST_GROUP_ID), $viewOnly, -1);
-			$bpPage->assignPermissions(Group::getByID(REGISTERED_GROUP_ID), $viewOnly);
+			// 
+			// After some more digging, it seems like saying can't view doesn't
+			// work properly. It will hide the page from everyone. If you simply
+			// don't assign any permissions for them at all, then it works properly
+			// I don't get why that is, might be a bug.
+			// 
+//			$bpPage->assignPermissions(Group::getByID(GUEST_GROUP_ID), $viewOnly, -1);
+//			$bpPage->assignPermissions(Group::getByID(REGISTERED_GROUP_ID), $viewOnly, -1);
 			$bpPage->assignPermissions(Group::getByID(ADMIN_GROUP_ID), $adminPage);
 			$bpPage->assignPermissions(Group::getByID(ADMIN_GROUP_ID), $writePage);
 			$bpPage->assignPermissions($bpGroup, $writePage);
@@ -172,7 +178,6 @@ class C5BoilerplatePackage extends Package {
 			// in order to allow sub-pages to be added by our admins, we'll need to get
 			// a _bit_ more complicated.
 			// this could probbly be cleaned up a little, to be more efficient
-			
 			// first get the ctID of the page type we want them to be able to add
 			$bpID = CollectionType::getByHandle('boilerplate')->getCollectionTypeID();
 			// In order to allow the user to add sub pages, we need to do this
@@ -185,21 +190,21 @@ class C5BoilerplatePackage extends Package {
 			$args['pageTypesIncluded'][$bpAdminUserPE->getAccessEntityID()] = 'C';
 			// you can repeat this with as many different collection type IDs as you like
 			$args['ctIDInclude'][$bpAdminUserPE->getAccessEntityID()][] = $bpID;
-			
+
 			// now to allow it for groups
 			$bpAdminPE = GroupPermissionAccessEntity::getOrCreate($bpGroup);
 			$entities[] = $bpAdminPE;
 			$args['allowExternalLinksIncluded'][$bpAdminPE->getAccessEntityID()] = 1;
 			$args['pageTypesIncluded'][$bpAdminPE->getAccessEntityID()] = 'C';
 			$args['ctIDInclude'][$bpAdminPE->getAccessEntityID()][] = $bpID;
-			
+
 			// ordinary admins
 			$adminPE = GroupPermissionAccessEntity::getOrCreate(Group::getByID(ADMIN_GROUP_ID));
 			$entities[] = $adminPE;
 			$args['allowExternalLinksIncluded'][$adminPE->getAccessEntityID()] = 1;
 			$args['pageTypesIncluded'][$adminPE->getAccessEntityID()] = 'C';
 			$args['ctIDInclude'][$adminPE->getAccessEntityID()][] = $bpID;
-			
+
 			// and now some crazy voodoo
 			$pk = PagePermissionKey::getByHandle('add_subpage');
 			$pk->setPermissionObject($bpPage);
@@ -225,7 +230,6 @@ class C5BoilerplatePackage extends Package {
 			$pkr->setPagePermissionsInheritance(1);
 			$pkr->setRequesterUserID($u->getUserID());
 			$pkr->trigger();
-			
 		}
 	}
 
@@ -287,25 +291,25 @@ class C5BoilerplatePackage extends Package {
 		 */
 
 //		$mc1 = CollectionType::getByHandle('left_sidebar');
-//          $mc2 = CollectionType::getByHandle('page');
+//		$mc2 = CollectionType::getByHandle('page');
 //		if (is_object($mc1) && is_object($bpMC)) {
 //			$dm = $mc1->getMasterTemplate();
 //			$blocks = $dm->getBlocks();
 //
 //			// alias these blocks to the new event calendar page
-//			foreach($blocks as $b) {
+//			foreach ($blocks as $b) {
 //				$b->alias($bpMC);
 //			}
 //		} else {
-//              if (is_object($mc2) && is_object($bpMC)) {
-//                    $dm = $mc2->getMasterTemplate();
-//                    $blocks = $dm->getBlocks();
-//                    // alias these blocks to the new event calendar page
-//                    foreach($blocks as $b) {
-//                         $b->alias($bpMC);
-//                    }
-//               }
-//          }
+//			if (is_object($mc2) && is_object($bpMC)) {
+//				$dm = $mc2->getMasterTemplate();
+//				$blocks = $dm->getBlocks();
+//				// alias these blocks to the new event calendar page
+//				foreach ($blocks as $b) {
+//					$b->alias($bpMC);
+//				}
+//			}
+//		}
 	}
 
 	private function installPages($pkg) {
