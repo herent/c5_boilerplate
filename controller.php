@@ -17,7 +17,7 @@ class C5BoilerplatePackage extends Package {
 	protected $appVersionRequired = '5.6.1.2';
 	// by incrementing this when you add new functionality, deployment becomes
 	// much much easier
-	protected $pkgVersion = '0.0.1';
+	protected $pkgVersion = '0.0.2';
 
 	// this will show on the installation screen in the dashboard
 	public function getPackageDescription() {
@@ -280,18 +280,7 @@ class C5BoilerplatePackage extends Package {
 			    'ctName' => t('Boilerplate Page'));
 
 			$boilerplate = CollectionType::add($data, $pkg);
-		} else {
-			// this can be a bit dangerous, if you have already added pages
-			// with this handle. but if somehow it's not associated with the 
-			// package due to a botched package install or something it is
-			// useful. probably remove for production/marketplace
-			$boilerplate->delete();
-			$data = array(
-			    'ctHandle' => 'boilerplate',
-			    'ctName' => t('Boilerplate Page'));
-
-			$boilerplate = CollectionType::add($data, $pkg);
-		}
+		} 
 		/*
 		 * Now that we have the boilerplate page type, we want to grab the master
 		 * collection and add a block to it
