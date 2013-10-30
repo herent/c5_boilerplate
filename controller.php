@@ -17,7 +17,7 @@ class C5BoilerplatePackage extends Package {
 	protected $appVersionRequired = '5.6.1.2';
 	// by incrementing this when you add new functionality, deployment becomes
 	// much much easier
-	protected $pkgVersion = '0.0.2';
+	protected $pkgVersion = '0.0.3';
 
 	// this will show on the installation screen in the dashboard
 	public function getPackageDescription() {
@@ -81,6 +81,7 @@ class C5BoilerplatePackage extends Package {
 		parent::upgrade();
 		$pkg = Package::getByHandle($this->pkgHandle);
 		$this->installAdditionalPageAttributes($pkg);
+		$this->installJobs($pkg);
 	}
 
 	public function upgradeCoreData() {
