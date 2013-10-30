@@ -17,7 +17,7 @@ class C5BoilerplatePackage extends Package {
 	protected $appVersionRequired = '5.6.1.2';
 	// by incrementing this when you add new functionality, deployment becomes
 	// much much easier
-	protected $pkgVersion = '0.0.3';
+	protected $pkgVersion = '0.0.4';
 
 	// this will show on the installation screen in the dashboard
 	public function getPackageDescription() {
@@ -358,6 +358,10 @@ class C5BoilerplatePackage extends Package {
 
 	private function installSinglePages($pkg) {
 
+		//this array will hold all the custom dashboard page paths and their icons. 
+		//see the setupDashboardIcons method for more info
+		$dashboardIcons = array();
+
 		$path = '/dashboard/boilerplate';
 
 		$cID = Page::getByPath($path)->getCollectionID();
@@ -385,6 +389,12 @@ class C5BoilerplatePackage extends Package {
 				$p->update(array('cName' => t('Output Stuff')));
 			}
 		}
+		// Set the icon for the /dashboard/boilerplate/output_stuff page.
+		// See the icons section of the twitter bootstrap docs for available icons.
+		$dashboardIcons[$path] = 'icon-bullhorn';
+
+		//setup the icons set for custom dashboard single pages
+		$this->setupDashboardIcons($dashboardIcons);
 	}
 
 	private function installAdditionalPageAttributes($pkg) {
@@ -529,4 +539,18 @@ class C5BoilerplatePackage extends Package {
 //		}
 	}
 
+	//Takes an associative array of pages to set icons for. This is only for dashboard single pages
+	//Key 	= page path
+	//Value = bootstrap icon class
+	private function setupDashboardIcons($iconArray) {
+		$cak = CollectionAttributeKey::getByHandle('icon_dashboard');
+		if (is_object($cak)) {
+			foreach($iconArray as $path => $icon) {
+				$sp = Page::getByPath($path);
+				if (is_object($sp) && (!$sp->isError())) {
+					$sp->setAttribute('icon_dashboard', $icon);
+				}
+			}
+		}
+	}
 }
