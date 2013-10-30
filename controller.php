@@ -17,7 +17,7 @@ class C5BoilerplatePackage extends Package {
 	protected $appVersionRequired = '5.6.1.2';
 	// by incrementing this when you add new functionality, deployment becomes
 	// much much easier
-	protected $pkgVersion = '0.0.2';
+	protected $pkgVersion = '0.0.3';
 
 	// this will show on the installation screen in the dashboard
 	public function getPackageDescription() {
@@ -64,6 +64,7 @@ class C5BoilerplatePackage extends Package {
 		$this->installPageTypes($pkg);
 		$this->installPages($pkg);
 		$this->installThemes($pkg);
+		$this->installJobs($pkg);
 		$this->installGroups();
 		$this->setPermissions();
 	}
@@ -80,6 +81,7 @@ class C5BoilerplatePackage extends Package {
 		parent::upgrade();
 		$pkg = Package::getByHandle($this->pkgHandle);
 		$this->installAdditionalPageAttributes($pkg);
+		$this->installJobs($pkg);
 	}
 
 	public function upgradeCoreData() {
@@ -393,6 +395,16 @@ class C5BoilerplatePackage extends Package {
 
 	private function installThemes($pkg) {
 		PageTheme::add('boilerplate', $pkg);
+	}
+
+	private function installJobs($pkg){
+		Loader::model('job');
+
+		//Make sure the job isn't already installed
+		$dumpSample = Job::getByHandle('dump_sample_table');
+		if(!is_object($dumpSample)){
+			Job::installByPackage('dump_sample_table', $pkg);
+		}
 	}
 
 	private function installPageAttributes($pkg) {

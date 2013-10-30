@@ -109,6 +109,20 @@ It's assumed that most people who would want to use a package like this would en
 replacing this with their own starting point that's relevant to the way they work, 
 their favorite grid system, etc.
 
+### A Simple Automated Job
+
+The package controller (/controller.php) installs the "Dump Sample Table" job in the 
+installJobs() function. The code for this job is located in /jobs/dump_sample_table.php.
+The logic for the job is defined in the run() method and simply dumps all the records
+from the BoilerplateSample table and returns a proper error message. 
+
+This demonstrates:
+
+1. Installing an automated job in the package controller
+2. Creating a class that defines the job logic
+3. Throwing exceptions in the job run() method
+4. Returning output messages in the run method
+
 How to Use This Package
 -----------------------
 
