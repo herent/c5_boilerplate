@@ -62,6 +62,7 @@ class C5BoilerplatePackage extends Package {
 		$this->installSinglePages($pkg);
 		$this->installPageAttributes($pkg);
 		$this->installFileAttributes($pkg);
+		$this->installUserAttributes($pkg);
 		$this->installPageTypes($pkg);
 		$this->installPages($pkg);
 		$this->installThemes($pkg);
@@ -570,6 +571,39 @@ class C5BoilerplatePackage extends Package {
                                      'akName' => t('Text Name'),
                                      'akIsSearchable' => true,
                                      'akIsSearchableIndexed' => true), $pkg)->setAttributeSet($bfa);
+           }
+    }
+
+    private function installUserAttributes($pkg) {
+
+        $uakc = AttributeKeyCategory::getByHandle('user');
+        
+        // Multiple means an attribute can be in more than one set, but you 
+        // can't choose what set they show up in for the gui
+        // $uakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_MULTIPLE);
+        // $uakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_NONE);
+        $uakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_SINGLE);
+        $bua = $uakc->addSet('c5_boilerplate_user_attributes', 
+                             t('Boilerplate User Attributes'), $pkg);
+        
+        //add boolean attributes
+        $bp_boolean = UserAttributeKey::getByHandle('bp_boolean');
+           if (!$bp_boolean instanceof UserAttributeKey) {
+                   $bp_boolean = UserAttributeKey::add('boolean', array(
+                                     'akHandle' => 'bp_boolean',
+                                     'akName' => t('Boolean Name'),
+                                     'akIsSearchable' => true,
+                                     'akIsSearchableIndexed' => true), $pkg)->setAttributeSet($bua);
+           }
+
+        //add text attributes
+        $bp_text = UserAttributeKey::getByHandle('bp_text');
+           if (!$bp_text instanceof UserAttributeKey) {
+                   $bp_text = UserAttributeKey::add('text', array(
+                                     'akHandle' => 'bp_text',
+                                     'akName' => t('Text Name'),
+                                     'akIsSearchable' => true,
+                                     'akIsSearchableIndexed' => true), $pkg)->setAttributeSet($bua);
            }
     }
 
