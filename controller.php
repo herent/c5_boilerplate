@@ -61,6 +61,7 @@ class C5BoilerplatePackage extends Package {
 		$this->installBlocks($pkg);
 		$this->installSinglePages($pkg);
 		$this->installPageAttributes($pkg);
+		$this->installFileAttributes($pkg);
 		$this->installPageTypes($pkg);
 		$this->installPages($pkg);
 		$this->installThemes($pkg);
@@ -538,6 +539,39 @@ class C5BoilerplatePackage extends Package {
 //					  'akIsSearchable' => false), $pkg)->setAttributeSet($bpa);
 //		}
 	}
+
+	private function installFileAttributes($pkg) {
+
+        $fakc = AttributeKeyCategory::getByHandle('file');
+        
+        // Multiple means an attribute can be in more than one set, but you 
+        // can't choose what set they show up in for the gui
+        // $fakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_MULTIPLE);
+        // $fakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_NONE);
+        $fakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_SINGLE);
+        $bfa = $fakc->addSet('c5_boilerplate_file_attributes', 
+                             t('Boilerplate File Attributes'), $pkg);
+        
+        //add boolean attributes
+        $bp_boolean = FileAttributeKey::getByHandle('bp_boolean');
+           if (!$bp_boolean instanceof FileAttributeKey) {
+                   $bp_boolean = FileAttributeKey::add('boolean', array(
+                                     'akHandle' => 'bp_boolean',
+                                     'akName' => t('Boolean Name'),
+                                     'akIsSearchable' => true,
+                                     'akIsSearchableIndexed' => true), $pkg)->setAttributeSet($bfa);
+           }
+
+        //add text attributes
+        $bp_text = FileAttributeKey::getByHandle('bp_text');
+           if (!$bp_text instanceof FileAttributeKey) {
+                   $bp_text = FileAttributeKey::add('text', array(
+                                     'akHandle' => 'bp_text',
+                                     'akName' => t('Text Name'),
+                                     'akIsSearchable' => true,
+                                     'akIsSearchableIndexed' => true), $pkg)->setAttributeSet($bfa);
+           }
+    }
 
 	//Takes an associative array of pages to set icons for. This is only for dashboard single pages
 	//Key 	= page path
